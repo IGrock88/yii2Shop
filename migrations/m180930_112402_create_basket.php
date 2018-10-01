@@ -17,7 +17,9 @@ class m180930_112402_create_basket extends Migration
             'quantity' => $this->integer()->notNull(),
             'good_id' => $this->integer()->notNull(),
             'user_id' => $this->integer(),
-            'order_id' => $this->integer()
+            'order_id' => $this->integer(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ]);
     }
 

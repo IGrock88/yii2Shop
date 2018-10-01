@@ -19,7 +19,9 @@ class m180930_112433_create_good extends Migration
             'short_description' => $this->string(),
             'full_description' => $this->string(),
             'view' => $this->integer()->defaultValue(0),
-            'category_id' => $this->integer()->notNull()
+            'category_id' => $this->integer()->notNull(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ]);
     }
 

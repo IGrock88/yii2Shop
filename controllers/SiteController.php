@@ -32,7 +32,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post', 'get'],
                 ],
             ],
         ];
@@ -46,6 +46,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'layout' => false
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -60,6 +61,12 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex()
+    {
+        $this->layout = false;
+        return $this->render('../spa/main');
+    }
+
+    public function actionAdmin()
     {
         return $this->render('index');
     }
@@ -130,4 +137,5 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
 }

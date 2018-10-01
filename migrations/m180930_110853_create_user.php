@@ -17,6 +17,7 @@ class m180930_110853_create_user extends Migration
             'username' => $this->string()->notNull(),
             'email' => $this->string()->notNull(),
             'avatar' => $this->string(),
+            'status' => $this->integer()->notNull()->defaultValue(10),
             'password_hash' => $this->string()->notNull(),
             'access_token' => $this->string()->defaultValue('NULL'),
             'auth_key' => $this->string()->defaultValue('NULL'),

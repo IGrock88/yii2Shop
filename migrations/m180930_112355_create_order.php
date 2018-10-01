@@ -16,7 +16,9 @@ class m180930_112355_create_order extends Migration
         $this->createTable('order', [
             'id' => $this->primaryKey(),
             'total' => $this->integer()->notNull(),
-            'user_id' => $this->integer()->notNull()
+            'user_id' => $this->integer()->notNull(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ]);
     }
 
