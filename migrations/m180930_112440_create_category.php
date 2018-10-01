@@ -12,7 +12,11 @@ class m180930_112440_create_category extends Migration
      */
     public function safeUp()
     {
-
+        $this->createTable('category', [
+            'id' => $this->primaryKey(),
+            'name' => $this->string()->notNull(),
+            'parent_id' => $this->integer()->defaultValue('NULL')
+        ]);
     }
 
     /**
@@ -20,9 +24,7 @@ class m180930_112440_create_category extends Migration
      */
     public function safeDown()
     {
-        echo "m180930_112440_create_category cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('category');
     }
 
     /*

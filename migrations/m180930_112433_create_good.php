@@ -12,7 +12,15 @@ class m180930_112433_create_good extends Migration
      */
     public function safeUp()
     {
-
+        $this->createTable('good', [
+            'id' => $this->primaryKey(),
+            'title' => $this->string()->notNull(),
+            'title_img' => $this->string(),
+            'short_description' => $this->string(),
+            'full_description' => $this->string(),
+            'view' => $this->integer()->defaultValue(0),
+            'category_id' => $this->integer()->notNull()
+        ]);
     }
 
     /**
@@ -20,9 +28,7 @@ class m180930_112433_create_good extends Migration
      */
     public function safeDown()
     {
-        echo "m180930_112433_create_good cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('good');
     }
 
     /*

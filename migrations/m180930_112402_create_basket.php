@@ -12,7 +12,13 @@ class m180930_112402_create_basket extends Migration
      */
     public function safeUp()
     {
-
+        $this->createTable('basket', [
+            'id' => $this->primaryKey(),
+            'quantity' => $this->integer()->notNull(),
+            'good_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer(),
+            'order_id' => $this->integer()
+        ]);
     }
 
     /**
@@ -20,9 +26,7 @@ class m180930_112402_create_basket extends Migration
      */
     public function safeDown()
     {
-        echo "m180930_112402_create_basket cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('basket');
     }
 
     /*
