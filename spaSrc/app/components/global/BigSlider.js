@@ -23,7 +23,7 @@ export default class BigSlider extends React.Component{
                     <p>engagement ring</p>
                     <a href="#" className="btn-more">Read more</a>
                 </div>
-                <div className=" slider__itemyellow">
+                <div className="slider__item yellow">
                     <h3>You deserve to be beauty</h3>
                     <p>golden bracelets</p>
                     <a href="#" className="btn-more">Read more</a>

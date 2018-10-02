@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import Aside from "./Aside";
 
 export default class Body extends React.Component{
@@ -23,13 +24,13 @@ export default class Body extends React.Component{
                             <section className="products">
                                 <article>
                                     <a href="product.html"><img src="images/11.jpg" alt=""/></a>
-                                    <h3><a href="product.html">Lorem ipsum dolor</a></h3>
+                                    <h3><Link to="/product/1">Lorem ipsum dolor</Link></h3>
                                     <h4><a href="product.html">$990.00</a></h4>
                                     <a href="cart.html" className="btn-add">Add to cart</a>
                                 </article>
                                 <article>
                                     <a href="product.html"><img src="images/12.jpg" alt=""/></a>
-                                    <h3><a href="product.html">cupidatat non proident</a></h3>
+                                    <h3><Link to="/product/2">cupidatat non proident</Link></h3>
                                     <h4><a href="product.html">$1 200.00</a></h4>
                                     <a href="cart.html" className="btn-add">Add to cart</a>
                                 </article>

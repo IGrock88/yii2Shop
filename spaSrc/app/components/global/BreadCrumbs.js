@@ -7,8 +7,8 @@ export default class BreadCrumbs extends React.Component{
             <div id="breadcrumbs">
                 <div className="container">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li>Product results</li>
+                        <li><a href="/">Home</a></li>
+                        <li>{this.props.pageTitle}</li>
                     </ul>
                 </div>
             </div>

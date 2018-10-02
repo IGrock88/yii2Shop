@@ -5,10 +5,9 @@ import Body from "../components/products/Body";
 
 export default class Products extends React.Component{
     render() {
-        console.log(this.props);
         return (
             <div>
-            <BreadCrumbs/>
+            <BreadCrumbs pageTitle={this.props.params.category}/>
             <Body/>
             </div>
         );

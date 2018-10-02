@@ -9,7 +9,7 @@ export default class Header extends React.Component{
         return (
             <header id="header">
                 <div className="container">
-                    <Link to={'/'} id="logo" title="Diana’s jewelry">Diana’s jewelry</Link>
+                    <Link to={'/'} id="logo" title="Diana’s jewelry">YII2 JEWELRY SHOP</Link>
                     <div className="right-links">
                         <ul>
                             <li><a href="cart.html"><span className="ico-products"></span>3 products, $4 500.00</a></li>

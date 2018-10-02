@@ -231,8 +231,6 @@ a:hover {
 	display: block;
 	float: left;
 	cursor: pointer;
-	text-indent: -9999em;
-
 }
 
 
@@ -254,6 +252,10 @@ a:hover {
 
 #menu a {
 	color: #737375;
+}
+
+.trigger{
+	display: none;
 }
 
 
@@ -1666,6 +1668,8 @@ h1 {
 		right: 10px;
 		cursor: pointer;
 		background: url(../images/btn_mobile_menu.png) no-repeat 50% 50%;
+		border: none;
+		outline: none;
 	}
 
 	#menu ul {
