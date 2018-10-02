@@ -1,9 +1,22 @@
 import React from 'react';
+import Header from "./Header";
+
+import {Link} from 'react-router';
+import MainMenu from "./MainMenu";
+import Footer from "./Footer";
 
 
 export default class App extends React.Component{
 
     render(){
-        return <h1>TEST</h1>;
+        return (
+            <div>
+                <Header/>
+                <MainMenu/>
+                {this.props.children}
+                <Footer/>
+            </div>
+
+        );
     }
 }

@@ -10,29 +10,29 @@ module.exports = {
     module: {
         rules: [
             { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-            // {
-            //     test: /\.png$/,
-            //     loader: 'file-loader'
-            // },
+            {
+                test: /\.png$/,
+                loader: 'url-loader',
+            },
             {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader'
             },
             {
                 test: /\.(woff|woff2)$/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=./fonts/[name].[ext]"
+                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=../fonts/[name].[ext]"
             },
             {
                 test: /\.ttf$/,
-                loader: "url-loader?limit=10000&mimetype=application/octet-stream&name=./fonts/[name].[ext]"
+                loader: "url-loader?limit=10000&mimetype=application/octet-stream&name=../fonts/[name].[ext]"
             },
             {
                 test: /\.eot$/,
-                loader: "url-loader?limit=10000&mimetype=application/octet-stream&name=./fonts/[name].[ext]"
+                loader: "url-loader?limit=10000&mimetype=application/octet-stream&name=../fonts/[name].[ext]"
             },
             {
                 test: /\.svg$/,
-                loader: "url-loader?limit=10000&mimetype=application/svg+xml&name=./fonts/[name].[ext]"
+                loader: "url-loader?limit=10000&mimetype=application/svg+xml&name=../fonts/[name].[ext]"
             }
         ]
     }

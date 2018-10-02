@@ -55,26 +55,12 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $this->layout = false;
-        return $this->render('../spa/main');
-    }
 
     public function actionAdmin()
     {
         return $this->render('index');
     }
 
-    public function actionTest()
-    {
-        return 'Hello';
-    }
 
     /**
      * Login action.

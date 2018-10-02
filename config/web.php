@@ -47,9 +47,19 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'admin' => 'site/admin'
+                'admin' => 'site/admin',
+                '/' => 'spa/spa'
             ],
         ],
+    ],
+    'modules' => [
+
+        'spa' => [
+
+            'class' => 'app\modules\spa\SpaReact',
+
+        ],
+
     ],
     'params' => $params,
 ];

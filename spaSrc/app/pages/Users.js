@@ -2,10 +2,11 @@ import React from 'react';
 
 export default class Users extends React.Component{
     render(){
+        console.log('test');
         return(
-            <main>
-                <div className="col-lg-8"><div className="panel">Пользователи</div></div>
-            </main>
+
+                <div className="col-lg-8"><div className="panel"><h1>Пользователи</h1></div></div>
+
         )
     }
 }
