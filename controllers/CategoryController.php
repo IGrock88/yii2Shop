@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\services\CategoryService;
 use Yii;
 use app\models\Category;
 use app\models\search\CategorySearch;
@@ -66,12 +67,15 @@ class CategoryController extends Controller
     {
         $model = new Category();
 
+        $categories = (new CategoryService())->getAllCategories();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'categories' => $categories,
         ]);
     }
 

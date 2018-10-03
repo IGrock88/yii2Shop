@@ -1,36 +1,50 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Good */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $categories array */
 ?>
 
 <div class="good-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'layout' => 'horizontal'
+    ]); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <?= Html::a('Создать новую категорию', ['category/create'], ['class' => 'btn btn-primary']) ?>
+                <?= $form->field($model, 'category_id')->dropDownList($categories)->label('Категория') ?>
 
-    <?= $form->field($model, 'title_img')->textInput(['maxlength' => true]) ?>
+            </div>
 
-    <?= $form->field($model, 'short_description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title_img')->fileInput(['accept' => 'image/*']) ?>
 
-    <?= $form->field($model, 'full_description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'view')->textInput() ?>
+            <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
+            <?= $form->field($model, 'short_description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+            <?= $form->field($model, 'full_description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+
+        </div>
+        <div class="col-lg-6">
+
+            <?= Html::img($model->getThumbUploadUrl('title_img', \app\models\Good::BIG_IMG), ['class' => 'img-thumbnail']) ?>
+
+        </div>
+
     </div>
+
 
     <?php ActiveForm::end(); ?>
 

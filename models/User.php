@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property int $updated_at
  * @property int $role_id
  * @property int $status
+ * @property string $password write-only password
  *
  * @property Basket[] $baskets
  * @property Order[] $orders
@@ -31,10 +32,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    const SCENARIO_UPDATE = 'user_update';
+
     const STATUS_TEXT = [
         self::STATUS_ACTIVE => 'активен',
         self::STATUS_DELETED => 'удален'
     ];
+
+
+    private $_password;
     /**
      * {@inheritdoc}
      */
@@ -43,10 +49,34 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return 'user';
     }
 
+    public function beforeSave($insert)
+    {
+        if(!parent::beforeSave($insert)){
+            return false;
+        }
+
+        if($this->isNewRecord){
+            $this->generateAuthKey();
+        }
+        return true;
+    }
+
     public function behaviors()
     {
         return [
             TimestampBehavior::className(),
+            [
+                'class' => \mohorev\file\UploadImageBehavior::class,
+                'attribute' => 'image',
+                'scenarios' => ['create', 'update'],
+                'placeholder' => '@app/modules/user/assets/images/userpic.jpg',
+                'path' => '@webroot/upload/user/{id}',
+                'url' => '@web/upload/user/{id}',
+                'thumbs' => [
+                    'big' => ['width' => 568, 'height' => 568],
+                    'small' => ['width' => 200, 'height' => 200, 'bg_color' => '000'],
+                ],
+            ],
         ];
     }
 
@@ -57,8 +87,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email', 'password_hash'], 'required'],
+            [['username', 'email'], 'required', 'on' => self::SCENARIO_UPDATE],
             [['created_at', 'updated_at', 'role_id', 'status'], 'integer'],
-            [['username', 'email', 'avatar', 'password_hash', 'access_token', 'auth_key'], 'string', 'max' => 255],
+            [['username', 'email', 'avatar', 'password_hash', 'access_token', 'auth_key', 'password'], 'string', 'max' => 255],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
@@ -189,6 +220,47 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return \Yii::$app->getSecurity()->validatePassword($password, $this->password_hash);
+    }
+
+    /**
+     * Generates password hash from password and sets it to the model
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        if($password){
+            $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        }
+        $this->_password = $password;
+    }
+
+    /**
+     *
+     * @param string $password
+     */
+    public function getPassword()
+    {
+        return $this->_password;
+    }
+
+    /**
+     * Generates "remember me" authentication key
+     */
+    public function generateAuthKey()
+    {
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {
+        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 }

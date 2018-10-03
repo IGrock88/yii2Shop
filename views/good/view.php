@@ -31,13 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            'title_img',
+            [
+                    'attribute' => 'title_img',
+                'value' => Html::img($model->getThumbUploadUrl('title_img', \app\models\Good::SMALL_IMG)),
+                'format' => 'html'
+            ],
+            'price',
             'short_description',
             'full_description',
             'view',
-            'category_id',
-            'created_at',
-            'updated_at',
+            'category.name',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

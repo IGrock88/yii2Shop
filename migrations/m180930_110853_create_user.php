@@ -23,7 +23,7 @@ class m180930_110853_create_user extends Migration
             'auth_key' => $this->string()->defaultValue('NULL'),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
-            'role_id' => $this->integer()
+            'role_id' => $this->integer()->defaultValue(1)
         ]);
     }
 

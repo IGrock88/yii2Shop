@@ -3,7 +3,6 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-\app\modules\spa\assets\SpaAssets::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

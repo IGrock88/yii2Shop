@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\services\CategoryService;
 use Yii;
 use app\models\Good;
 use app\models\search\GoodSearch;
@@ -26,7 +27,6 @@ class GoodController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-
         ];
     }
 
@@ -67,12 +67,17 @@ class GoodController extends Controller
     {
         $model = new Good();
 
+        $model->setScenario(Good::SCENARIO_CREATE);
+
+        $categories = (new CategoryService())->getAllCategories();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'categories' => $categories
         ]);
     }
 
@@ -87,12 +92,17 @@ class GoodController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->setScenario(Good::SCENARIO_UPDATE);
+
+        $categories = (new CategoryService())->getAllCategories();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'categories' => $categories,
         ]);
     }
 

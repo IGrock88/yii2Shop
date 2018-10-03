@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use mohorev\file\UploadImageBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -11,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $id
  * @property string $title
  * @property string $title_img
+ * @property int $price
  * @property string $short_description
  * @property string $full_description
  * @property int $view
@@ -21,9 +23,16 @@ use yii\behaviors\TimestampBehavior;
  * @property Basket[] $baskets
  * @property Category $category
  * @property GoodImg[] $goodImgs
+ * @mixin UploadImageBehavior
  */
 class Good extends \yii\db\ActiveRecord
 {
+
+    const BIG_IMG = 'big';
+    const SMALL_IMG = 'small';
+
+    const SCENARIO_UPDATE = 'update_good';
+    const SCENARIO_CREATE = 'create_good';
     /**
      * {@inheritdoc}
      */
@@ -36,6 +45,18 @@ class Good extends \yii\db\ActiveRecord
     {
         return [
             TimestampBehavior::className(),
+            [
+                'class' => \mohorev\file\UploadImageBehavior::class,
+                'attribute' => 'title_img',
+                'scenarios' => [self::SCENARIO_UPDATE, self::SCENARIO_CREATE],
+                'placeholder' => '@webroot/upload/default/pic.jpg',
+                'path' => '@webroot/upload/products/{id}',
+                'url' => '@web/upload/products/{id}',
+                'thumbs' => [
+                    self::BIG_IMG => ['width' => 568],
+                    self::SMALL_IMG => ['width' => 233, 'height' => 385],
+                ],
+            ],
         ];
     }
 
@@ -45,10 +66,16 @@ class Good extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category_id'], 'required'],
-            [['view', 'category_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'title_img', 'short_description', 'full_description'], 'string', 'max' => 255],
+            [['title', 'price', 'category_id'], 'required'],
+            [['price', 'view', 'category_id', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'short_description', 'full_description'], 'string', 'max' => 255],
+
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [
+                'title_img', 'image', 'extensions' => 'jpg, jpeg, gif, png', 'on' => [self::SCENARIO_UPDATE, self::SCENARIO_CREATE],
+                'minSize' => '100',
+                'maxSize' => '10000000'
+            ]
         ];
     }
 
@@ -59,14 +86,15 @@ class Good extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'title_img' => 'Title Img',
-            'short_description' => 'Short Description',
-            'full_description' => 'Full Description',
-            'view' => 'View',
-            'category_id' => 'Category ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'title' => 'Наименование',
+            'title_img' => 'Титульная картинка',
+            'price' => 'Цена',
+            'short_description' => 'Краткое описание',
+            'full_description' => 'Полное описание',
+            'view' => 'Просмотры',
+            'category_id' => 'ID Категории',
+            'created_at' => 'Создан',
+            'updated_at' => 'Обновлен',
         ];
     }
 
@@ -102,4 +130,16 @@ class Good extends \yii\db\ActiveRecord
     {
         return new \app\models\query\GoodQuery(get_called_class());
     }
+
+
+    public function getBigTitleImg()
+    {
+        return $this->getThumbUploadUrl('title_img', Good::BIG_IMG);
+    }
+
+    public function getSmallTitleImg()
+    {
+        return $this->getThumbUploadUrl('title_img', Good::SMALL_IMG);
+    }
+
 }

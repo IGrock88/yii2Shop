@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'layout' => 'adminlte/main',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -15,6 +16,10 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'xBaSWdppAv7VekeTVUxeX4GNN4L5yvE5',
+            'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -47,19 +52,24 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/good', 'api/user']
+                ],
                 'admin' => 'site/admin',
-                '/' => 'spa/spa'
+                '/' => 'spa/spa',
+                '<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                '<controller:(user|good)>s' => '<controller>/index'
             ],
         ],
     ],
     'modules' => [
-
         'spa' => [
-
             'class' => 'app\modules\spa\SpaReact',
-
         ],
-
+        'api' => [
+            'class' => 'app\modules\api\ApiModule',
+        ],
     ],
     'params' => $params,
 ];

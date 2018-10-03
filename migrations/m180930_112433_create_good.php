@@ -16,6 +16,7 @@ class m180930_112433_create_good extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'title_img' => $this->string(),
+            'price' => $this->integer()->notNull(),
             'short_description' => $this->string(),
             'full_description' => $this->string(),
             'view' => $this->integer()->defaultValue(0),

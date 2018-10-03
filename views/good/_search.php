@@ -24,9 +24,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title_img') ?>
 
+    <?= $form->field($model, 'price') ?>
+
     <?= $form->field($model, 'short_description') ?>
 
-    <?= $form->field($model, 'full_description') ?>
+    <?php // echo $form->field($model, 'full_description') ?>
 
     <?php // echo $form->field($model, 'view') ?>
 
